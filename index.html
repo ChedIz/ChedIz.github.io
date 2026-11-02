@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chedrick Sangkula</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Chedrick Sangkula, remote virtual assistant from Las Piñas, Philippines. Customer support, admin and data work, with a Computer Science background.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Geist+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600&display=swap">
+<style>
+/* Layout: a bento hero (intro, photo, live Manila clock, proof tiles), then one calm reading column:
+   services, a typed timeline, toolkit, contact. Navy is carried over from the resume so both read as one brand. */
+:root {
+  --paper: #F1F4F8;
+  --card: #FFFFFF;
+  --ink: #0E1A2B;
+  --muted: #566377;
+  --line: #D8E0EA;
+  --brand: #1F4E79;
+  --on-brand: #FFFFFF;
+  --on-brand-soft: #BFD3E6;
+  --link: #1F4E79;
+  --tint: #E2EDF8;
+  --live: #1C9A57;
+
+  --display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --body: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "Geist Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  --radius: 18px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #09101B; --card: #101A29; --ink: #E5ECF5; --muted: #93A2B6; --line: #1F2E45;
+    --brand: #21507E; --on-brand: #FFFFFF; --on-brand-soft: #B5CCE3; --link: #8DBDEB;
+    --tint: #12263D; --live: #3CC97E; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #09101B; --card: #101A29; --ink: #E5ECF5; --muted: #93A2B6; --line: #1F2E45;
+  --brand: #21507E; --on-brand: #FFFFFF; --on-brand-soft: #B5CCE3; --link: #8DBDEB;
+  --tint: #12263D; --live: #3CC97E; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 16px/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; z-index: 10;
+  height: env(safe-area-inset-top, 0px); background: var(--paper);
+}
+a { color: var(--link); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 6px; }
+img { max-width: 100%; display: block; }
+
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.mono { font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- Nav ---------- */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.mark { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 600; }
+.mark span:first-child {
+  display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px;
+  background: var(--brand); color: var(--on-brand);
+  font: 700 14px/1 var(--display); font-variation-settings: "wdth" 85;
+}
+.nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; align-items: center; }
+.nav ul a { color: var(--muted); text-decoration: none; font-size: 14.5px; font-weight: 500; }
+.nav ul a:hover { color: var(--ink); }
+.theme {
+  width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line);
+  background: var(--card); color: var(--ink); cursor: pointer; display: grid; place-items: center;
+}
+.theme svg { width: 16px; height: 16px; }
+
+/* ---------- Bento ---------- */
+.hero { padding-block: 28px 12px; }
+.bento {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-areas:
+    "intro intro photo status"
+    "intro intro photo clock"
+    "qa    role  cert  setup";
+}
+.tile {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 22px; min-width: 0;
+  animation: rise .6s cubic-bezier(.2,.7,.2,1) both;
+}
+.tile:nth-child(2) { animation-delay: .05s; } .tile:nth-child(3) { animation-delay: .1s; }
+.tile:nth-child(4) { animation-delay: .15s; } .tile:nth-child(5) { animation-delay: .2s; }
+.tile:nth-child(6) { animation-delay: .25s; } .tile:nth-child(7) { animation-delay: .3s; }
+.tile:nth-child(8) { animation-delay: .35s; }
+@keyframes rise { from { transform: translateY(10px); } to { transform: none; } }
+
+.intro {
+  grid-area: intro; background: var(--brand); border-color: transparent; color: var(--on-brand);
+  padding: clamp(24px, 4vw, 40px); display: flex; flex-direction: column; gap: 18px;
+}
+.intro .eyebrow { color: var(--on-brand-soft); }
+.intro h1 {
+  margin: 0; font-family: var(--display); font-weight: 750;
+  font-size: clamp(2.8rem, 7vw, 5.4rem); line-height: .9; letter-spacing: -.025em;
+  font-variation-settings: "wdth" 78, "opsz" 96; text-wrap: balance;
+}
+.intro p { margin: 0; max-width: 52ch; color: var(--on-brand-soft); font-size: 16.5px; }
+.intro p strong { color: var(--on-brand); font-weight: 600; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 6px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 999px;
+  font: 600 15px/1 var(--body); text-decoration: none; cursor: pointer; border: 1px solid transparent;
+}
+.btn-solid { background: var(--on-brand); color: #1F4E79; }
+.btn-ghost { color: var(--on-brand); border-color: color-mix(in srgb, var(--on-brand) 40%, transparent); background: transparent; }
+.btn:hover { transform: translateY(-1px); }
+
+.photo { grid-area: photo; padding: 0; overflow: hidden; background: #E4E4E4; position: relative; }
+.photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; min-height: 280px; }
+.photo figcaption {
+  position: absolute; left: 12px; bottom: 12px; padding: 6px 10px; border-radius: 999px;
+  background: rgba(14, 26, 43, .72); color: #fff; font: 500 12px/1 var(--mono); letter-spacing: .04em;
+}
+
+.status { grid-area: status; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
+.live { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--live); position: relative; flex: none; }
+.dot::after {
+  content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--live);
+  opacity: .5; animation: ping 2.2s ease-out infinite;
+}
+@keyframes ping { from { transform: scale(.6); opacity: .6; } to { transform: scale(1.6); opacity: 0; } }
+.status p, .small { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+.clock { grid-area: clock; background: var(--tint); border-color: transparent; display: flex; flex-direction: column; gap: 4px; }
+.clock .time {
+  font: 700 clamp(2rem, 3.4vw, 2.6rem)/1 var(--display); font-variation-settings: "wdth" 80;
+  font-variant-numeric: tabular-nums; letter-spacing: -.01em; margin-top: 6px;
+}
+
+.stat { display: flex; flex-direction: column; gap: 6px; }
+.stat .big {
+  font: 700 clamp(2.2rem, 3.6vw, 2.9rem)/1 var(--display); font-variation-settings: "wdth" 80;
+  font-variant-numeric: tabular-nums; letter-spacing: -.02em; color: var(--link);
+}
+.qa { grid-area: qa; } .role { grid-area: role; } .cert { grid-area: cert; }
+.setup { grid-area: setup; }
+.setup ul { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 7px; font-size: 14px; }
+.setup li { display: flex; gap: 8px; align-items: flex-start; }
+.setup svg { flex: none; width: 16px; height: 16px; margin-top: 3px; color: var(--live); }
+
+/* ---------- Sections ---------- */
+section.block { padding-block: clamp(56px, 8vw, 96px) 0; }
+.head { display: grid; gap: 10px; margin-bottom: 32px; max-width: 720px; }
+.head h2 {
+  margin: 0; font: 700 clamp(1.9rem, 4.2vw, 3rem)/1.02 var(--display);
+  font-variation-settings: "wdth" 82; letter-spacing: -.02em; text-wrap: balance;
+}
+.head p { margin: 0; color: var(--muted); max-width: 60ch; }
+
+.services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
+.service { border-top: 1px solid var(--line); padding-block: 22px 26px; min-width: 0; }
+.service h3 { margin: 0 0 6px; font: 650 1.25rem/1.25 var(--display); font-variation-settings: "wdth" 90; }
+.service p { margin: 0 0 10px; color: var(--muted); }
+.service .mono { color: var(--link); }
+
+.timeline { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--line); }
+.timeline > li {
+  position: relative; display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 24px;
+  padding: 0 0 34px 28px;
+}
+.timeline > li::before {
+  content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--paper); border: 2px solid var(--link);
+}
+.timeline > li.now::before { background: var(--link); }
+.timeline ul li::marker { color: var(--muted); }
+.when { font-family: var(--mono); font-size: 13px; color: var(--muted); padding-top: 2px; font-variant-numeric: tabular-nums; }
+.kind {
+  display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 999px; vertical-align: 2px;
+  font: 500 11px/1.5 var(--mono); letter-spacing: .06em; text-transform: uppercase;
+  background: var(--tint); color: var(--link);
+}
+.timeline h3 { margin: 0; font: 650 1.2rem/1.3 var(--display); font-variation-settings: "wdth" 90; }
+.timeline .org { margin: 2px 0 8px; color: var(--muted); font-size: 15px; }
+.timeline ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; max-width: 64ch; }
+
+.tools { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+.tools h3 { margin: 0 0 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
+  font-size: 14px; white-space: nowrap;
+}
+
+.contact {
+  margin-top: clamp(56px, 8vw, 96px); padding-block: clamp(40px, 6vw, 64px);
+  border-top: 1px solid var(--line);
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; align-items: end;
+}
+.contact h2 {
+  margin: 0; font: 750 clamp(2.4rem, 6vw, 4.4rem)/.95 var(--display);
+  font-variation-settings: "wdth" 78; letter-spacing: -.025em; text-wrap: balance;
+}
+.reach { display: grid; gap: 14px; }
+.email-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 14px 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--line);
+}
+.email-row span { font-weight: 600; overflow-wrap: anywhere; min-width: 0; }
+.copy {
+  font: 600 13px/1 var(--body); padding: 9px 14px; border-radius: 999px; cursor: pointer;
+  background: var(--brand); color: var(--on-brand); border: 0;
+}
+.links { display: flex; flex-wrap: wrap; gap: 8px 22px; font-weight: 500; }
+
+footer { padding-block: 24px 40px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--line); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 920px) {
+  .bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "intro intro" "photo status" "photo clock" "qa role" "cert setup";
+  }
+  .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .contact { grid-template-columns: minmax(0, 1fr); align-items: start; }
+}
+@media (max-width: 600px) {
+  .nav ul li.hide-sm { display: none; }
+  .bento {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "intro" "photo" "status" "clock" "qa" "role" "cert" "setup";
+  }
+  .photo img { min-height: 0; aspect-ratio: 1 / 1; }
+  .services, .tools { grid-template-columns: minmax(0, 1fr); }
+  .timeline > li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="mark" href="#top"><span>CS</span><span>Chedrick Sangkula</span></a>
+    <ul>
+      <li class="hide-sm"><a href="#services">Services</a></li>
+      <li class="hide-sm"><a href="#experience">Experience</a></li>
+      <li class="hide-sm"><a href="#toolkit">Toolkit</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li>
+        <button class="theme" id="theme-toggle" type="button" aria-label="Switch light or dark mode">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wrap" id="top">
+  <!-- ===================== HERO ===================== -->
+  <header class="hero">
+    <div class="bento">
+      <div class="tile intro">
+        <div class="eyebrow">Virtual assistant · Las Piñas, PH</div>
+        <h1>Chedrick<br>Sangkula</h1>
+        <p>I'm a <strong>Customer Service Representative at Gatestone</strong> and a Computer Science student at FEU Alabang. Every day I take calls, process contract renewals and payment arrangements, and keep account notes clean in the CRM. I'm looking for remote VA work where being good with people and good with tools both count.</p>
+        <div class="actions">
+          <a class="btn btn-solid" href="#contact">Work with me</a>
+          <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener">View résumé (PDF)</a>
+        </div>
+      </div>
+
+      <figure class="tile photo" style="margin:0">
+        <img src="photo.jpg" alt="Portrait of Chedrick Sangkula" width="400" height="365">
+        <figcaption>GMT+8 · Manila</figcaption>
+      </figure>
+
+      <div class="tile status">
+        <span class="live"><span class="dot" aria-hidden="true"></span>Open to remote VA roles</span>
+        <p>Customer support, admin and data work, plus the tech side of both.</p>
+      </div>
+
+      <div class="tile clock" aria-live="off">
+        <span class="eyebrow">My time right now</span>
+        <span class="time" id="manila-time">GMT+8</span>
+        <span class="small" id="time-diff">Philippine Standard Time, no daylight saving.</span>
+      </div>
+
+      <div class="tile stat qa">
+        <span class="eyebrow">Quality</span>
+        <span class="big">85%</span>
+        <span class="small">Latest QA score on calls at Gatestone.</span>
+      </div>
+
+      <div class="tile stat role">
+        <span class="eyebrow">Current role</span>
+        <span class="big">CSR</span>
+        <span class="small">Gatestone & Co., since May 2026. Calls, renewals, collections, CRM.</span>
+      </div>
+
+      <div class="tile stat cert">
+        <span class="eyebrow">Certified</span>
+        <span class="big">2× ITS</span>
+        <span class="small">Information Technology Specialist in Python (2025) and Java (2024).</span>
+      </div>
+
+      <div class="tile setup">
+        <span class="eyebrow">Home office</span>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Own laptop</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Stable internet</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Backup internet and power</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Noise-cancelling headset</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== SERVICES ===================== -->
+  <section class="block" id="services">
+    <div class="head">
+      <span class="eyebrow">Services</span>
+      <h2>What I can take off your plate</h2>
+      <p>The work I already do every day, and the tech skills I bring from school.</p>
+    </div>
+    <div class="services">
+      <article class="service">
+        <h3>Customer support</h3>
+        <p>Inbound and outbound calls, account questions, follow-ups and payment reminders, handled politely and logged properly.</p>
+        <span class="mono">Phone · email · chat</span>
+      </article>
+      <article class="service">
+        <h3>Inbox, calendar and files</h3>
+        <p>Sorting email, booking meetings, and keeping shared folders tidy so you can find things the first time.</p>
+        <span class="mono">Gmail · Google Calendar · Drive</span>
+      </article>
+      <article class="service">
+        <h3>Data entry and CRM upkeep</h3>
+        <p>Accurate records and call notes your team can actually use. I write notes all day at Gatestone, so this is second nature.</p>
+        <span class="mono">Google Sheets · Excel · CRM tools</span>
+      </article>
+      <article class="service">
+        <h3>The techy bits</h3>
+        <p>Spreadsheet formulas, small automations, simple graphics in Canva, and fixing the tool that stopped working.</p>
+        <span class="mono">Sheets formulas · Python · Canva</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== EXPERIENCE ===================== -->
+  <section class="block" id="experience">
+    <div class="head">
+      <span class="eyebrow">Experience</span>
+      <h2>Work, school and certifications</h2>
+    </div>
+    <ol class="timeline">
+      <li class="now">
+        <span class="when">May 2026 – now</span>
+        <div>
+          <h3>Customer Service Representative <span class="kind">Work</span></h3>
+          <p class="org">Gatestone & Co. International</p>
+          <ul>
+            <li>Handle a high daily volume of inbound and outbound calls within compliance rules.</li>
+            <li>Process contract renewals and set up payment arrangements with customers.</li>
+            <li>Log every call in the CRM so the next agent knows exactly where things stand.</li>
+            <li>Latest QA score: 85%.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <span class="when">Jun 2025</span>
+        <div>
+          <h3>IT Specialist in Python <span class="kind">Certification</span></h3>
+          <p class="org">Certiport</p>
+        </div>
+      </li>
+      <li>
+        <span class="when">Apr 2025 – May 2026</span>
+        <div>
+          <h3>Service Crew <span class="kind">Work</span></h3>
+          <p class="org">McDonald's Philippines (Golden Arches Development Corp.)</p>
+          <ul>
+            <li>Worked cashier, drive-thru, server and runner stations, often in the same shift.</li>
+            <li>Kept orders accurate and fast during peak hours under speed-of-service targets.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <span class="when">Oct 2024</span>
+        <div>
+          <h3>IT Specialist in Java <span class="kind">Certification</span></h3>
+          <p class="org">Certiport</p>
+        </div>
+      </li>
+      <li>
+        <span class="when">2023 – now</span>
+        <div>
+          <h3>BS Computer Science, Software Engineering <span class="kind">School</span></h3>
+          <p class="org">Far Eastern University – Alabang</p>
+        </div>
+      </li>
+      <li>
+        <span class="when">2021 – 2023</span>
+        <div>
+          <h3>Senior High School, STEM <span class="kind">School</span></h3>
+          <p class="org">St. Andrew's School</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===================== TOOLKIT ===================== -->
+  <section class="block" id="toolkit">
+    <div class="head">
+      <span class="eyebrow">Toolkit</span>
+      <h2>Tools I already know</h2>
+    </div>
+    <div class="tools">
+      <div>
+        <h3 class="eyebrow">Office work</h3>
+        <div class="chips"><span class="chip">Google Workspace</span><span class="chip">Gmail</span><span class="chip">Google Sheets</span><span class="chip">Microsoft Word</span><span class="chip">Excel</span><span class="chip">PowerPoint</span></div>
+      </div>
+      <div>
+        <h3 class="eyebrow">Calls and chat</h3>
+        <div class="chips"><span class="chip">Zoom</span><span class="chip">Google Meet</span><span class="chip">Microsoft Teams</span><span class="chip">Slack</span><span class="chip">CRM systems</span></div>
+      </div>
+      <div>
+        <h3 class="eyebrow">Design</h3>
+        <div class="chips"><span class="chip">Canva</span></div>
+      </div>
+      <div>
+        <h3 class="eyebrow">Code</h3>
+        <div class="chips"><span class="chip">Python</span><span class="chip">Java</span><span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">Kotlin</span><span class="chip">C++</span><span class="chip">GitHub</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ===================== WORK SAMPLES (add yours here) =====================
+    When you have samples, delete the comment markers around this block and fill in each card.
+    Link each card to a Google Doc, Sheet, Canva design or Loom video that is set to "Anyone with the link can view".
+
+  <section class="block" id="samples">
+    <div class="head">
+      <span class="eyebrow">Work samples</span>
+      <h2>Things I've made</h2>
+    </div>
+    <div class="services">
+      <article class="service">
+        <h3>Client tracker in Google Sheets</h3>
+        <p>One sentence on what it does and who it helps.</p>
+        <a class="mono" href="PASTE-LINK-HERE" target="_blank" rel="noopener">Open sample</a>
+      </article>
+      <article class="service">
+        <h3>Customer email templates</h3>
+        <p>One sentence on what it does and who it helps.</p>
+        <a class="mono" href="PASTE-LINK-HERE" target="_blank" rel="noopener">Open sample</a>
+      </article>
+    </div>
+  </section>
+  -->
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="contact" id="contact">
+    <div>
+      <span class="eyebrow">Contact</span>
+      <h2>Need an extra pair of hands?</h2>
+    </div>
+    <div class="reach">
+      <div class="email-row">
+        <span id="email">chedrickkhyllesangkula@gmail.com</span>
+        <button class="copy" id="copy-email" type="button">Copy email</button>
+      </div>
+      <div class="links">
+        <a href="https://linkedin.com/in/chedrick-khylle-sangkula" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/ChedIz" target="_blank" rel="noopener">GitHub</a>
+        <a href="resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
+      </div>
+      <p class="small">Based in Las Piñas, on Manila time (GMT+8).</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>© <span id="year">2026</span> Chedrick Khylle P. Sangkula</span>
+    <span>Las Piñas City, Philippines</span>
+  </footer>
+</main>
+
+<script>
+  // Live Manila clock, plus how far ahead or behind the visitor is.
+  (function () {
+    var timeEl = document.getElementById('manila-time');
+    var diffEl = document.getElementById('time-diff');
+    var fmt;
+    try {
+      fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Manila', hour: 'numeric', minute: '2-digit', weekday: 'short' });
+    } catch (e) { return; }
+
+    function tick() {
+      timeEl.textContent = fmt.format(new Date()).replace(',', '');
+      var diff = (480 + new Date().getTimezoneOffset()) / 60; // Manila is UTC+8 all year
+      var hrs = Math.abs(diff);
+      var unit = hrs === 1 ? 'hour' : 'hours';
+      if (diff === 0) diffEl.textContent = "You're on Manila time too.";
+      else diffEl.textContent = 'Manila is ' + hrs + ' ' + unit + (diff > 0 ? ' ahead of you.' : ' behind you.');
+    }
+    tick();
+    setInterval(tick, 20000);
+  })();
+
+  // Copy email
+  (function () {
+    var btn = document.getElementById('copy-email');
+    var email = document.getElementById('email');
+    btn.addEventListener('click', function () {
+      var text = email.textContent.trim();
+      function selectIt() {
+        var r = document.createRange(); r.selectNodeContents(email);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        btn.textContent = 'Selected, press Ctrl+C';
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { btn.textContent = 'Copied'; }, selectIt);
+      } else { selectIt(); }
+      setTimeout(function () { btn.textContent = 'Copy email'; }, 2400);
+    });
+  })();
+
+  // Light/dark toggle (remembers the choice when the browser allows it)
+  (function () {
+    var root = document.documentElement;
+    try { var saved = localStorage.getItem('theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var current = root.getAttribute('data-theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      var next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  })();
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
